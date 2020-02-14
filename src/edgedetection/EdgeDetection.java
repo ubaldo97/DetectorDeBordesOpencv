@@ -25,7 +25,7 @@ public class EdgeDetection {
         // TODO code application logic here
         
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat color = Imgcodecs.imread("metal.jpg");
+        Mat color = Imgcodecs.imread("Muestra_4.jpg");
         Mat gris = new Mat();
         Mat blur = new Mat();
         Mat dst = new Mat();
@@ -33,17 +33,17 @@ public class EdgeDetection {
         Mat wide = new Mat();
         Imgproc.cvtColor(color, gris, Imgproc.COLOR_BGR2GRAY);
         Imgproc.GaussianBlur(gris, blur,new Size(0,0), 3);
-        Imgcodecs.imwrite("metal_gris.jpg",gris);
+        Imgcodecs.imwrite("Muestra_4_gris.jpg",gris);
         Core.addWeighted(gris,1.5,blur,-0.5,0,dst);
-        Imgcodecs.imwrite("metal_Sharpen.jpg",dst);
-        Imgproc.Canny(dst, wide, 80,240,3,true);
+        Imgcodecs.imwrite("Muestra_4_Sharpen.jpg",dst);
+        Imgproc.Canny(dst, wide, 69,208,3,true);
         double[] rgb;	
         int cont = 0;
         boolean b = false;
         wide.convertTo(draw, CvType.CV_8U);
-        for(int i=0;i<100;i++){
-            rgb = draw.get(200, 10+i);
-            draw.put(200, 10+i, 100);
+        for(int i=0;i<150;i++){
+            rgb = draw.get(50, 50+i);
+            draw.put(50, 50+i, 200);
             if((rgb[0]==255)&& (b==false)){
                 cont++;
                 b = true;
@@ -51,9 +51,12 @@ public class EdgeDetection {
                 b=false;
             }
         }
-        
+        double tam=0.0;
+        double l = cont/2;
+        tam = -6.64*Math.log10(l/1000)-3.288;
         System.out.println(cont/2);
-        if(Imgcodecs.imwrite("metal_ajustada.jpg", draw)){
+        System.out.println("El tamaño ASTM es: "+tam);
+        if(Imgcodecs.imwrite("Muestra_4_ajustada.jpg", draw)){
             System.out.println("Detectando bordes...");
             
         }
